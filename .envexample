@@ -1,0 +1,8 @@
+PORT = 3001  
+TZ = "+07:00"
+DATABASE: {  
+                DB_HOST="eldery.care.informatics.buu.ac.th"
+                DB_USER="noderoot"
+                DB_PASSWORD="12345678"
+                DB_NAME="elderdb"
+          }
