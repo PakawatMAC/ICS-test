@@ -1,8 +1,8 @@
-PORT = 3001  
+PORT = 9000
 TZ = "+07:00"
 DATABASE: {  
-                DB_HOST="eldery.care.informatics.buu.ac.th"
-                DB_USER="noderoot"
-                DB_PASSWORD="12345678"
-                DB_NAME="elderdb"
+                DB_HOST="localhost"
+                DB_USER="icstester"
+                DB_PASSWORD="test123456"
+                DB_NAME="icstestdb"
           }

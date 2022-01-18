@@ -11,6 +11,9 @@ router.get("/", productController.findAllProducts);
 // Retrieve search products
 router.get("/search/:id", productController.findProductsByKeyword);
 
+// Retrieve search products
+router.get("/limit/:id", productController.findProductsWithLimit);
+
 // Update a product with id
 router.put("/update/:id", productController.updateProduct);
 

@@ -1,22 +1,21 @@
 module.exports = (sequelize, Sequelize) => {
-  const Product = sequelize.define('Products', {
-
-    PROD_ID: {
+  const Order = sequelize.define('Orders', {
+    ORD_ID: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       allowNull: false,
       autoIncrement: true
     },
-    PROD_PRICE: {
+    ORD_total: {
       type: Sequelize.FLOAT,
       allowNull: false
     },
-    PROD_QUANTITY: {
-      type: Sequelize.INTEGER,
-      allowNull: true
-    }
-    
+    PAY_STATUS: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false
+    },
+
   });
 
-  return Product;
+  return Order;
 };

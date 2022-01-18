@@ -12,9 +12,9 @@ const productController = {
       var result = await product.findAll({
         where: {
           [Op.or]: [
-            { PROD_CATEGORY: { [Op.like]: '%' + keyword + '%' } },
-            { PROD_GENDER: { [Op.like]: '%' + keyword + '%' } },
-            { PROD_SIZE: { [Op.like]: '%' + keyword + '%' } }
+            { PROD_CATEGORY: { [Op.like]: keyword } },
+            { PROD_GENDER: { [Op.like]: keyword } },
+            { PROD_SIZE: { [Op.like]: keyword } }
           ]
         }
       })
@@ -27,6 +27,24 @@ const productController = {
       });
     }
   },
+
+  async findProductsWithLimit(req, res) {
+    const limits = req.params.id;
+
+    try {
+      var result = await product.findAll({
+        limit: parseInt(limits)
+      })
+
+      res.send(result);
+    } catch (err) {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving products."
+      });
+    }
+  },
+
   async addProduct(req, res) {
     try {
        const Product = {
@@ -96,16 +114,16 @@ const productController = {
 
       if (result == 1) {
         res.send({
-          message: "elder was deleted successfully!"
+          message: "Product was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete elder with id=${id}. Maybe elder was not found!`
+          message: `Cannot delete product with id=${id}. Maybe product was not found!`
         });
       }
     } catch (err) {
       res.status(500).send({
-        message: "Could not delete elder with id=" + id
+        message: "Could not delete product with id=" + id
       });
     }
   }

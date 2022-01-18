@@ -24,3 +24,6 @@ app.use(session({
 //route
 var productRouter = require('./routes/productRouter');
 app.use('/product', productRouter);
+
+var customerRouter = require('./routes/customerRouter');
+app.use('/customer', customerRouter);

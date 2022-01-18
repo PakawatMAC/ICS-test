@@ -34,6 +34,13 @@ Object.keys(db).forEach(modelName =>{
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+db.category = require("./categorys")(sequelize, Sequelize);
+db.customer = require("./customers")(sequelize, Sequelize);
+db.gender = require("./genders")(sequelize, Sequelize);
+db.orderdetail = require("./orderdetails")(sequelize, Sequelize);
+db.order = require("./orders")(sequelize, Sequelize);
+db.payment = require("./payments")(sequelize, Sequelize);
 db.product = require("./products")(sequelize, Sequelize);
+db.size = require("./sizes")(sequelize, Sequelize);
 
 module.exports = db;
