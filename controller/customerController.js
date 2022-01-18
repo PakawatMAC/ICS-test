@@ -13,7 +13,8 @@ const customerController = {
         where: {
           [Op.or]: [
             { CUS_ID: { [Op.like]: keyword } },
-            { CUS_NAME: { [Op.like]: keyword } },
+            { CUS_FNAME: { [Op.like]: keyword } },
+            { CUS_LNAME: { [Op.like]: keyword } },
             { CUS_ADDRESS: { [Op.like]: keyword } }
           ]
         }
@@ -32,7 +33,8 @@ const customerController = {
     try {
        const Customer = {
           CUS_ID: req.body.CUS_ID,
-          CUS_NAME: req.body.CUS_NAME,
+          CUS_FNAME: req.body.CUS_FNAME,
+          CUS_LNAME: req.body.CUS_LNAME,
           CUS_ADDRESS: req.body.CUS_ADDRESS
         };
       

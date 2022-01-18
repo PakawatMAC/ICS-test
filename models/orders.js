@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       autoIncrement: true
     },
-    ORD_total: {
+    ORD_TOTAL: {
       type: Sequelize.FLOAT,
       allowNull: false
     },

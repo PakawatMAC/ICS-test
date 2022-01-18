@@ -43,4 +43,71 @@ db.payment = require("./payments")(sequelize, Sequelize);
 db.product = require("./products")(sequelize, Sequelize);
 db.size = require("./sizes")(sequelize, Sequelize);
 
+//relation
+//Product
+db.product.belongsTo(db.category, {
+  as: 'CATEGORY',
+  foreignKey : {
+    name : 'CATE_ID',
+    allowNull: false
+  }
+});
+
+db.product.belongsTo(db.gender, {
+  as: 'GENDER',
+  foreignKey : {
+    name : 'GEN_ID',
+    allowNull: false
+  }
+});
+
+db.product.belongsTo(db.size, {
+  as: 'SIZE',
+  foreignKey : {
+    name : 'SIZE_ID',
+    allowNull: false
+  }
+});
+
+db.product.hasMany(db.orderdetail, {
+  foreignKey : {
+    name : 'PROD_ID',
+    allowNull: false
+  }
+});
+
+//customer
+
+db.customer.belongsTo(db.gender, {
+  as: 'gender',
+  foreignKey : {
+    name : 'GEN_ID',
+    allowNull: false
+  }
+});
+
+db.customer.hasMany(db.order, {
+  foreignKey : {
+    name : 'CUS_ID',
+    allowNull: false
+  }
+});
+
+// order
+
+db.order.belongsTo(db.payment, {
+  as: 'payment',
+  foreignKey : {
+    name : 'PAY_ID',
+    allowNull: false
+  }
+});
+
+db.order.hasMany(db.orderdetail, {
+  foreignKey : {
+    name : 'ORD_ID',
+    allowNull: false
+  }
+});
+
 module.exports = db;
