@@ -13,7 +13,7 @@ const categoryController = {
         where: {
           [Op.or]: [
 
-            { CATE_NAME: { [Op.like]: keyword } }
+            { CATE_NAME: { [Op.like]: "%" + keyword + "%"} }
 
           ]
         }

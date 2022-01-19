@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const orderController = require('../controller/orderController');
 const paymentController = require('../controller/paymentController');
-const orderdetailController = require('../controller/orderdetailController')
+
 
 // Create a new order
 router.post("/create", orderController.addOrder);

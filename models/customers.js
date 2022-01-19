@@ -1,15 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
   const Customer = sequelize.define('Customers', {
     CUS_ID: {
-      type: Sequelize.STRING(255),
+      type: Sequelize.INTEGER,
       primaryKey: true,
       allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: {
-          msg: "Must be a email address",
-        }
-      }
+      autoIncrement: true
     },
     CUS_FNAME: {
       type: Sequelize.STRING(255),

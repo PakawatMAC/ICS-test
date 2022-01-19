@@ -13,7 +13,7 @@ const sizeController = {
         where: {
           [Op.or]: [
 
-            { SIZE_NAME: { [Op.like]: keyword } }
+            { SIZE_NAME: { [Op.like]: "%" + keyword + "%" } }
 
           ]
         }

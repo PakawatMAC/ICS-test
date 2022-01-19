@@ -18,7 +18,7 @@ const productController = {
             { "$CATE_ID.CATE_NAME$": { [Op.like]: "%" + keyword + "%" } },
             { "$GEN_ID.GEN_NAME$": { [Op.like]: "%" + keyword + "%" } },
             { "$SIZE_ID.SIZE_NAME$": { [Op.like]: "%" + keyword + "%" } },
-            { PROD_PRICE: { [Op.like]: keyword } }
+            { PROD_PRICE: { [Op.like]: "%" + keyword + "%" } }
           ]
         }
       })
@@ -58,8 +58,27 @@ const productController = {
           PROD_PRICE: req.body.PROD_PRICE,
           PROD_QUANTITY: req.body.PROD_QUANTITY,
         };
-      
-      var result = await product.create(Product);
+
+        const sProd = await product.findAll({
+          where: {
+            GEN_ID: req.body.GEN_ID,
+            SIZE_ID: req.body.SIZE_ID,
+            CATE_ID: req.body.CATE_ID,
+          }
+        })
+      if (count(sProd) != 0) {
+        var result = await product.update({
+          PROD_QUANTITY: db.Sequelize.literal('PROD_QUANTITY - req.body.PROD_PRICE')
+        }, {
+          where: {
+            GEN_ID: req.body.GEN_ID,
+            SIZE_ID: req.body.SIZE_ID,
+            CATE_ID: req.body.CATE_ID
+          }
+        })
+      } else {
+        var result = await product.create(Product);
+      }
       res.send(result);
     } catch (err) {
       res.status(500).send({

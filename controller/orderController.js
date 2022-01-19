@@ -1,9 +1,7 @@
-const { orderdetail } = require("../models/db");
 const db = require("../models/db");
-
 const payment = db.payment;
 const customer = db.customer;
-const orderdetail = db.orderdetail;
+const orderitem = db.orderitem;
 const order = db.order;
 const product = db.product;
 const Op = db.Sequelize.Op;
@@ -58,17 +56,17 @@ const orderController = {
 
         var result2 = await order.create(Order);
 
-      const Orderdetail = {
+      const Orderitem = {
         ORD_ID: result2.ORD_ID,
         PROD_ID: result.PROD_ID,
         PROD_QTY: result.PROD_QTY,
       }
 
-      var result3 = await orderdetail.create(Orderdetail);
+      var result3 = await orderitem.create(Orderitem);
 
-      const prodid = Orderdetail.PROD_ID;
+      const prodid = Orderitem.PROD_ID;
 
-      var updateprod = await product.update({PROD_ID: db.Sequelize.literal('PROD_ID - Orderdetail.PROD_QTY')}, {
+      var updateprod = await product.update({PROD_ID: db.Sequelize.literal('PROD_ID - Orderitem.PROD_QTY')}, {
         where: {
           PROD_ID: prodid
         }
@@ -98,8 +96,8 @@ const orderController = {
             ],
           },
           {
-            model: orderdetail,
-            as: "orderdetail"
+            model: orderitem,
+            as: "orderitem"
           },
           {
             model: customer,
@@ -112,14 +110,14 @@ const orderController = {
     } catch (err) {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving genders."
+          err.message || "Some error occurred while retrieving orders."
       });
     }
   },
   async updateOrder(req, res) {
     try {
       const id = req.params.id;
-      var result = await gender.update(req.body, {
+      var result = await order.update(req.body, {
         where: {
           GEN_ID: id
         }
@@ -131,20 +129,20 @@ const orderController = {
         });
       } else {
         res.send({
-          message: `Cannot update gender with id=${id}. Maybe gender was not found`
+          message: `Cannot update order with id=${id}. Maybe order was not found`
         });
       }
     } catch (err) {
       res.status(500).send({
-        message: "Error updating gender with id=" + id
+        message: "Error updating order with id=" + id
       });
     }
   },
-  async deleteGender(req, res) {
+  async deleteOrder(req, res) {
     try {
       const id = req.params.id;
 
-      var result = await gender.destroy({
+      var result = await order.destroy({
         where: {
           GEN_ID: id
         }
@@ -154,16 +152,16 @@ const orderController = {
 
       if (result == 1) {
         res.send({
-          message: "Gender was deleted successfully!"
+          message: "Order was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete gender with id=${id}. Maybe gender was not found!`
+          message: `Cannot delete order with id=${id}. Maybe order was not found!`
         });
       }
     } catch (err) {
       res.status(500).send({
-        message: "Could not delete gender with id=" + id
+        message: "Could not delete order with id=" + id
       });
     }
   }
