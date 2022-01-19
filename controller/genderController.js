@@ -13,7 +13,7 @@ const genderController = {
         where: {
           [Op.or]: [
 
-            { GEN_NAME: { [Op.like]: "%" + keyword + "%" } }
+            { GEN_NAME: { [Op.like]: keyword } }
 
           ]
         }
