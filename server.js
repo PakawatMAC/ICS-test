@@ -37,8 +37,8 @@ app.use('/product', productRouter);
 var customerRouter = require('./routes/customerRouter');
 app.use('/customer', customerRouter);
 
-var reportRouter = require('./routes/reportRouter');
-app.use('/report', reportRouter);
+// var reportRouter = require('./routes/reportRouter');
+// app.use('/report', reportRouter);
 
 var orderRouter = require('./routes/orderRouter');
 app.use('/order', orderRouter);

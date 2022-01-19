@@ -79,7 +79,7 @@ db.product.hasMany(db.orderitem, {
 //customer
 
 db.customer.belongsTo(db.gender, {
-  as: 'gender',
+  as: 'GENDER',
   foreignKey : {
     name : 'GEN_ID',
     allowNull: false
@@ -96,7 +96,7 @@ db.customer.hasMany(db.order, {
 // order
 
 db.order.belongsTo(db.payment, {
-  as: 'payment',
+  as: 'PAYMENT',
   foreignKey : {
     name : 'PAY_ID',
     allowNull: true

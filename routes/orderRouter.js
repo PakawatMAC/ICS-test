@@ -1,23 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const orderController = require('../controller/orderController');
-const paymentController = require('../controller/paymentController');
+
 
 
 // Create a new order
 router.post("/create", orderController.addOrder);
 
-// Retrieve all customers
-router.get("/", customerController.findAllCustomers);
+// Retrieve all orders
+router.get("/", orderController.findAllOrders);
 
-// Retrieve search customers
-router.get("/search/:id", customerController.findCustomersByKeyword);
+// Retrieve search orders
+router.get("/search/:id", orderController.findOrdersByKeyword);
 
-// Update a customer with id
-router.put("/update/:id", customerController.updateCustomer);
+// Update a order with id
+router.put("/update/:id", orderController.updateOrder);
 
-// Delete a customer with id
-router.delete("/delete/:id", customerController.deleteCustomer);
+// Delete a order with id
+router.delete("/delete/:id", orderController.deleteOrder);
 
 
 

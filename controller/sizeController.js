@@ -35,7 +35,7 @@ const sizeController = {
           SIZE_NAME: req.body.SIZE_NAME
 
         };
-      
+      console.log(req.body.SIZE_NAME)
       var result = await size.create(Size);
       res.send(result);
     } catch (err) {

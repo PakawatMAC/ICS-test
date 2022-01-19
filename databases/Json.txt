@@ -1,0 +1,40 @@
+add customer
+{
+    "CUS_FNAME": "testeer",
+    "CUS_LNAME": "testtyy",
+    "CUS_ADDRESS": "123/123 ถ.789",
+    "GEN_ID": 2
+}
+
+add product
+{
+    "CATE_ID": 1,
+    "GEN_ID": 1,
+    "SIZE_ID": 2,
+    "PROD_PRICE": 100,
+    "PROD_QUANTITY": 19
+},{
+    "CATE_ID": 2,
+    "GEN_ID": 1,
+    "SIZE_ID": 2,
+    "PROD_PRICE": 160,
+    "PROD_QUANTITY": 9
+},{
+    "CATE_ID": 1,
+    "GEN_ID": 2,
+    "SIZE_ID": 2,
+    "PROD_PRICE": 100,
+    "PROD_QUANTITY": 19
+},{
+    "CATE_ID": 3,
+    "GEN_ID": 1,
+    "SIZE_ID": 2,
+    "PROD_PRICE": 200,
+    "PROD_QUANTITY": 1
+},{
+    "CATE_ID": 1,
+    "GEN_ID": 1,
+    "SIZE_ID": 4,
+    "PROD_PRICE": 180,
+    "PROD_QUANTITY": 19
+}

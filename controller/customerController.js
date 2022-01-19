@@ -13,10 +13,10 @@ const customerController = {
       var result = await customer.findAll({
         where: {
           [Op.or]: [
-            { CUS_ID: { [Op.like]: keyword } },
-            { CUS_FNAME: { [Op.like]: keyword } },
-            { CUS_LNAME: { [Op.like]: keyword } },
-            { CUS_ADDRESS: { [Op.like]: keyword } }
+            { CUS_ID: { [Op.like]:"%" + keyword + "%" } },
+            { CUS_FNAME: { [Op.like]: "%" + keyword + "%" } },
+            { CUS_LNAME: { [Op.like]: "%" + keyword + "%" } },
+            { CUS_ADDRESS: { [Op.like]: "%" + keyword + "%" } }
           ]
         }
       })
@@ -57,7 +57,7 @@ const customerController = {
             model: gender,
             as: "GENDER",
             attributes: [
-              ["GEN_NAME", "GENDER"]
+              "GEN_NAME"
             ],
           }
         ]

@@ -59,16 +59,17 @@ const productController = {
           PROD_QUANTITY: req.body.PROD_QUANTITY,
         };
 
-        const sProd = await product.findAll({
+        const sProd = await product.findAndCountAll({
           where: {
             GEN_ID: req.body.GEN_ID,
             SIZE_ID: req.body.SIZE_ID,
             CATE_ID: req.body.CATE_ID,
           }
         })
-      if (count(sProd) != 0) {
-        var result = await product.update({
-          PROD_QUANTITY: db.Sequelize.literal('PROD_QUANTITY - req.body.PROD_PRICE')
+        console.log(sProd)
+      if (sProd.length > 0) {
+        result = await product.update({
+          PROD_QUANTITY: sProd.PROD_QUANTITY + Product.PROD_QUANTITY
         }, {
           where: {
             GEN_ID: req.body.GEN_ID,
@@ -77,7 +78,7 @@ const productController = {
           }
         })
       } else {
-        var result = await product.create(Product);
+        result = await product.create(Product);
       }
       res.send(result);
     } catch (err) {
@@ -93,20 +94,23 @@ const productController = {
         include: [
           {
             model: gender,
+            as: "GENDER",
             attributes: [
-              ["GEN_NAME", "GENDER"]
+              ["GEN_NAME"]
             ],
           },
           {
             model: size,
+            as: "SIZE",
             attributes: [
-              ["SIZE_NAME", "SIZE"]
+              ["SIZE_NAME"]
             ],
           },
           {
             model: category,
+            as: "CATEGORY",
             attributes: [
-              ["CATE_NAME", "CATEGORY"]
+              ["CATE_NAME"]
             ],
           },
         ]
