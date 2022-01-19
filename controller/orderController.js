@@ -19,10 +19,23 @@ const orderController = {
 
             { ORD_STATUS: { [Op.like]: keyword } },
             { ORD_TOTAL: { [Op.like]: keyword } },
-            { "$CUS_ID.CUS_FNAME$": { [Op.like]: "%" + keyword + "%" } },
-            { "$CUS_ID.CUS_LNAME$": { [Op.like]: "%" + keyword + "%" } },
+            { "$Customer.CUS_FNAME$": { [Op.like]: "%" + keyword + "%" } },
+            { "$Customer.CUS_LNAME$": { [Op.like]: "%" + keyword + "%" } },
           ]
-        }
+        },
+        include: [
+          {
+            model: customer,
+            as: "Customer"
+            
+          },{
+            model: orderitem,
+            as: "Orderitems"
+          },{
+            model: payment,
+            as: "PAYMENT"
+          }
+        ]
       })
 
       res.send(result);
@@ -36,6 +49,14 @@ const orderController = {
 
   async addOrder(req, res) {
     try {
+      const prodqty = await product.findAll({
+        where: {
+          PROD_ID: req.body.PROD_ID
+        }
+      });
+      if((req.body.PROD_QTY - prodqty[0].dataValues.PROD_QUANTITY ) > 0){
+        res.send("สินค้าไม่เพียงพอ");
+      } else {
         const Payment = {
 
           PAY_AMOUNT: req.body.PAY_AMOUNT,
@@ -55,27 +76,27 @@ const orderController = {
         };
 
         var result2 = await order.create(Order);
-
       const Orderitem = {
         ORD_ID: result2.ORD_ID,
-        PROD_ID: result.PROD_ID,
-        PROD_QTY: result.PROD_QTY,
+        PROD_ID: req.body.PROD_ID,
+        Prod_qty: req.body.PROD_QTY,
       }
 
       var result3 = await orderitem.create(Orderitem);
 
       const prodid = Orderitem.PROD_ID;
-
-      var updateprod = await product.update({PROD_ID: db.Sequelize.literal('PROD_ID - Orderitem.PROD_QTY')}, {
+      console.log(prodqty[0].dataValues.PROD_QUANTITY);
+      var updateprod = await product.update({PROD_QUANTITY: prodqty[0].dataValues.PROD_QUANTITY - req.body.PROD_QTY}, {
         where: {
           PROD_ID: prodid
         }
       })
 
-      var ares = {result, result2, result};
+      var ares = [result, result2, result3, updateprod];
       res.send(ares);
 
-      
+      }
+        
     } catch (err) {
       res.status(500).send({
         message:
@@ -97,11 +118,11 @@ const orderController = {
           },
           {
             model: orderitem,
-            as: "orderitem"
+            as: "Orderitems"
           },
           {
             model: customer,
-            as: "customer"
+            as: "Customer"
           }
         ]
       });
@@ -119,7 +140,7 @@ const orderController = {
       const id = req.params.id;
       var result = await order.update(req.body, {
         where: {
-          GEN_ID: id
+          ORD_ID: id
         }
       })
       if (result == 1) {
@@ -144,7 +165,7 @@ const orderController = {
 
       var result = await order.destroy({
         where: {
-          GEN_ID: id
+          ORD_ID: id
         }
       })
 

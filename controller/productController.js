@@ -15,12 +15,28 @@ const productController = {
       var result = await product.findAll({
         where: {
           [Op.or]: [
-            { "$CATE_ID.CATE_NAME$": { [Op.like]: "%" + keyword + "%" } },
-            { "$GEN_ID.GEN_NAME$": { [Op.like]: "%" + keyword + "%" } },
-            { "$SIZE_ID.SIZE_NAME$": { [Op.like]: "%" + keyword + "%" } },
+            { "$CATEGORY.CATE_NAME$": { [Op.like]: "%" + keyword + "%" } },
+            { "$GENDER.GEN_NAME$": { [Op.like]: "%" + keyword + "%" } },
+            { "$SIZE.SIZE_NAME$": { [Op.like]: "%" + keyword + "%" } },
             { PROD_PRICE: { [Op.like]: "%" + keyword + "%" } }
           ]
-        }
+        },
+        include: [
+          {
+            model: gender,
+            as: "GENDER",
+            attributes: ["GEN_NAME"]
+            
+          },{
+            model: size,
+            as: "SIZE",
+            attributes: ["SIZE_NAME"]
+          },{
+            model: category,
+            as: "CATEGORY",
+            attributes: ["CATE_NAME"]
+          }
+        ]
       })
 
       res.send(result);
@@ -64,12 +80,13 @@ const productController = {
             GEN_ID: req.body.GEN_ID,
             SIZE_ID: req.body.SIZE_ID,
             CATE_ID: req.body.CATE_ID,
+            PROD_PRICE: req.body.PROD_PRICE
           }
         })
-        console.log(sProd)
-      if (sProd.length > 0) {
+        var result
+      if (sProd.count > 0) {
         result = await product.update({
-          PROD_QUANTITY: sProd.PROD_QUANTITY + Product.PROD_QUANTITY
+          PROD_QUANTITY: sProd.rows[0].dataValues.PROD_QUANTITY + Product.PROD_QUANTITY
         }, {
           where: {
             GEN_ID: req.body.GEN_ID,
@@ -95,24 +112,17 @@ const productController = {
           {
             model: gender,
             as: "GENDER",
-            attributes: [
-              ["GEN_NAME"]
-            ],
-          },
-          {
+            attributes: ["GEN_NAME"]
+            
+          },{
             model: size,
             as: "SIZE",
-            attributes: [
-              ["SIZE_NAME"]
-            ],
-          },
-          {
+            attributes: ["SIZE_NAME"]
+          },{
             model: category,
             as: "CATEGORY",
-            attributes: [
-              ["CATE_NAME"]
-            ],
-          },
+            attributes: ["CATE_NAME"]
+          }
         ]
       });
 

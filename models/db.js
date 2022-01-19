@@ -37,7 +37,7 @@ db.sequelize = sequelize;
 db.category = require("./categorys")(sequelize, Sequelize);
 db.customer = require("./customers")(sequelize, Sequelize);
 db.gender = require("./genders")(sequelize, Sequelize);
-db.orderitem = require("./orderitem")(sequelize, Sequelize);
+db.orderitem = require("./orderitems")(sequelize, Sequelize);
 db.order = require("./orders")(sequelize, Sequelize);
 db.payment = require("./payments")(sequelize, Sequelize);
 db.product = require("./products")(sequelize, Sequelize);
@@ -106,6 +106,13 @@ db.order.belongsTo(db.payment, {
 db.order.hasMany(db.orderitem, {
   foreignKey : {
     name : 'ORD_ID',
+    allowNull: false
+  }
+});
+
+db.order.belongsTo(db.customer, {
+  foreignKey : {
+    name : 'CUS_ID',
     allowNull: false
   }
 });

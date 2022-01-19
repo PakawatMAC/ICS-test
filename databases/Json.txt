@@ -1,5 +1,11 @@
 add customer
 {
+    "CUS_FNAME": "tester",
+    "CUS_LNAME": "testyy",
+    "CUS_ADDRESS": "123/123 ถ.456",
+    "GEN_ID": 1
+}
+{
     "CUS_FNAME": "testeer",
     "CUS_LNAME": "testtyy",
     "CUS_ADDRESS": "123/123 ถ.789",
@@ -37,4 +43,13 @@ add product
     "SIZE_ID": 4,
     "PROD_PRICE": 180,
     "PROD_QUANTITY": 19
+}
+
+add order
+{
+    "CUS_ID": "2",
+    "ORD_STATUS": "wfd",
+    "ORD_TOTAL": "200",
+    "PROD_ID": 2,
+    "PROD_QTY": 2
 }
