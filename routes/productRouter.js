@@ -1,6 +1,6 @@
-const express = require("express")
-const router = express.Router()
-const productController = require('../controller/productController')
+const express = require("express");
+const router = express.Router();
+const productController = require('../controller/productController');
 
 // Create a new product
 router.post("/create", productController.addProduct);
@@ -11,7 +11,7 @@ router.get("/", productController.findAllProducts);
 // Retrieve search products
 router.get("/search/:id", productController.findProductsByKeyword);
 
-// Retrieve search products
+// Retrieve with limit products
 router.get("/limit/:id", productController.findProductsWithLimit);
 
 // Update a product with id

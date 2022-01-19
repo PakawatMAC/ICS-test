@@ -10,8 +10,8 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.FLOAT,
       allowNull: false
     },
-    PAY_STATUS: {
-      type: Sequelize.BOOLEAN,
+    ORD_STATUS: {
+      type: Sequelize.STRING(255),
       allowNull: false
     },
 

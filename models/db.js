@@ -99,7 +99,7 @@ db.order.belongsTo(db.payment, {
   as: 'payment',
   foreignKey : {
     name : 'PAY_ID',
-    allowNull: false
+    allowNull: true
   }
 });
 

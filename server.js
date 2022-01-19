@@ -22,8 +22,23 @@ app.use(session({
 }));
 
 //route
+var categoryRouter = require('./routes/categoryRouter');
+app.use('/category', categoryRouter);
+
+var sizeRouter = require('./routes/sizeRouter');
+app.use('/size', sizeRouter);
+
+var genderRouter = require('./routes/genderRouter');
+app.use('/gender', genderRouter);
+
 var productRouter = require('./routes/productRouter');
 app.use('/product', productRouter);
 
 var customerRouter = require('./routes/customerRouter');
 app.use('/customer', customerRouter);
+
+var reportRouter = require('./routes/reportRouter');
+app.use('/report', reportRouter);
+
+var orderRouter = require('./routes/orderRouter');
+app.use('/order', orderRouter);

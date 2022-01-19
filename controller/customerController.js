@@ -1,5 +1,6 @@
 const db = require("../models/db");
 const customer = db.customer;
+const gender = db.gender;
 const Op = db.Sequelize.Op;
 
 
@@ -35,7 +36,8 @@ const customerController = {
           CUS_ID: req.body.CUS_ID,
           CUS_FNAME: req.body.CUS_FNAME,
           CUS_LNAME: req.body.CUS_LNAME,
-          CUS_ADDRESS: req.body.CUS_ADDRESS
+          CUS_ADDRESS: req.body.CUS_ADDRESS,
+          GEN_ID: req.body.GEN_ID
         };
       
       var result = await customer.create(Customer);
@@ -49,7 +51,17 @@ const customerController = {
   },
   async findAllCustomers(req, res) {
     try {
-      var result = await customer.findAll();
+      var result = await customer.findAll({
+        include: [
+          {
+            model: gender,
+            as: "GENDER",
+            attributes: [
+              ["GEN_NAME", "GENDER"]
+            ],
+          }
+        ]
+      });
 
       res.send(result);
     } catch (err) {

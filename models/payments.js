@@ -6,10 +6,6 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       autoIncrement: true
     },
-    PAY_STATUS: {
-      type: Sequelize.BOOLEAN,
-      allowNull: false
-    },
     PAY_AMOUNT: {
       type: Sequelize.FLOAT,
       allowNull: true

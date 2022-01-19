@@ -1,5 +1,8 @@
 const db = require("../models/db");
 const product = db.product;
+const category = db.category;
+const size = db.size;
+const gender = db.gender;
 const Op = db.Sequelize.Op;
 
 
@@ -12,9 +15,10 @@ const productController = {
       var result = await product.findAll({
         where: {
           [Op.or]: [
-            { PROD_CATEGORY: { [Op.like]: keyword } },
-            { PROD_GENDER: { [Op.like]: keyword } },
-            { PROD_SIZE: { [Op.like]: keyword } }
+            { "$CATE_ID.CATE_NAME$": { [Op.like]: "%" + keyword + "%" } },
+            { "$GEN_ID.GEN_NAME$": { [Op.like]: "%" + keyword + "%" } },
+            { "$SIZE_ID.SIZE_NAME$": { [Op.like]: "%" + keyword + "%" } },
+            { PROD_PRICE: { [Op.like]: keyword } }
           ]
         }
       })
@@ -48,9 +52,9 @@ const productController = {
   async addProduct(req, res) {
     try {
        const Product = {
-          PROD_CATEGORY: req.body.PROD_CATEGORY,
-          PROD_GENDER: req.body.PROD_GENDER,
-          PROD_SIZE: req.body.PROD_SIZE,
+          GEN_ID: req.body.GEN_ID,
+          SIZE_ID: req.body.SIZE_ID,
+          CATE_ID: req.body.CATE_ID,
           PROD_PRICE: req.body.PROD_PRICE,
           PROD_QUANTITY: req.body.PROD_QUANTITY,
         };
@@ -66,7 +70,28 @@ const productController = {
   },
   async findAllProducts(req, res) {
     try {
-      var result = await product.findAll();
+      var result = await product.findAll({
+        include: [
+          {
+            model: gender,
+            attributes: [
+              ["GEN_NAME", "GENDER"]
+            ],
+          },
+          {
+            model: size,
+            attributes: [
+              ["SIZE_NAME", "SIZE"]
+            ],
+          },
+          {
+            model: category,
+            attributes: [
+              ["CATE_NAME", "CATEGORY"]
+            ],
+          },
+        ]
+      });
 
       res.send(result);
     } catch (err) {
